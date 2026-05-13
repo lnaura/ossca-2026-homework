@@ -214,13 +214,3 @@ jobs:
             exit 1
           fi
 
-      - name: cleanup test resources
-        if: always()
-        run: |
-          set +e
-          sudo ip netns delete "$NETNS_NAME" >/dev/null 2>&1
-          sudo ip link delete "$HOST_IF" >/dev/null 2>&1
-          if [ -n "${APP_PID:-}" ]; then
-            sudo kill "$APP_PID" >/dev/null 2>&1
-            wait "$APP_PID" >/dev/null 2>&1
-          fi
